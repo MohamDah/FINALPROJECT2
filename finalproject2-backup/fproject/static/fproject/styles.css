@@ -1,0 +1,27 @@
+.ah {
+    margin: 15px;
+    color: rgb(13, 189, 13);
+}
+
+.inbody {
+    padding: 15px;
+}
+
+
+.userlist button {
+    float: right;
+}
+
+.chatbar {
+    position: fixed;
+    bottom: 0px;
+    left: 30%
+}
+
+.chatbar textarea {
+    resize:none;
+    height:50px; 
+    width: 500px;
+}
+
+

@@ -1,0 +1,35 @@
+{% extends 'fproject/layout.html' %}
+{% block body %} 
+    <h2>Find other users</h2>
+    <!--MAKE THE EXPLORE LIST NOT SHOW USERS THAT ARE ALREADY FRIENDS -->
+    <ul class="list-group">
+    {% for i in users %}
+    {% if i != user and i not in friends %}
+        <li class="list-group-item userlist"><strong>{{ i.username }}</strong>
+            {% if i.pk in requestfrom %}
+            <form action="{% url 'friends' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="reason" value="accept">
+                <input type="hidden" name="target" value="{{ i.id }}">
+                <button type="submit" class="btn btn-secondary">Accept request</button>
+            </form>
+            {% elif i.pk in requestto %}
+            <form action="{% url 'send_request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="reason" value="remove">
+                <input type="hidden" name="target" value="{{ i.id }}">
+                <button type="submit" class="btn btn-secondary">Request Sent, remove?</button>
+            </form>
+            {% else %}
+            <form action="{% url 'send_request' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" name="reason" value="send">
+                <input type="hidden" name="target" value="{{ i.id }}">
+                <button type="submit" class="btn btn-primary">Add Friend</button>
+            </form>
+            {% endif %}
+        </li>
+    {% endif %}
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends 'fproject/layout.html' %}
+{% block body %} 
+    <div id="chatter" style="display:none">{{ u2.username }}</div>
+    <div class="container-fluid" id="chatbox"></div>
+
+    <div class="chatbar">
+        <form action="{% url 'send_message' %}" method="post">
+            {% csrf_token %}
+            <textarea name="text"></textarea>
+            <input type="hidden" name="target" value="{{ u2.id }}">
+            <button type="submit" class="btn btn-secondary">Send</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = document.querySelector('#chatter').innerHTML;
+            loadchat(name);
+            const interval = setInterval(function() {
+                loadchat(name)
+            }, 2000);
+        })
+    </script>
+{% endblock %}
